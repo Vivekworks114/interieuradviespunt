@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import Features from '../components/Features.astro';
+import Testimonials from '../components/Testimonials.astro';
+import CTA from '../components/CTA.astro';
+import Services from '../components/Services.astro';
+---
+<BaseLayout title="Home">
+  <Header slot="header" />
+  <Hero />
+  <Features />
+  <Testimonials />
+  <CTA
+    title="De beste tips voor je interieur vind je hier"
+    description="Op onze website kun je ook een hele hoop tips vinden voor je interieur. Hierbij kun je denken aan tips hoe je jouw woning het beste in kunt richten, maar ook tips voor bijvoorbeeld de beste planten voor in je woning. De tips die wij geven zijn allemaal gecontroleerd, zodat we zeker weten dat het voor iedereen haalbaar is."
+    href="/blog/"
+  />
+  <Services />
+  <CTA
+    title="Je interieur helemaal aanpakken"
+    description="Je interieur helemaal aanpakken kan in sommige situaties de beste optie zijn. Wij geven je daar tips en informatie over, zodat je precies weet wat je moet doen en je goed kunt voorbereiden."
+    href="/blog/"
+    variant="accent"
+  />
+  <Footer slot="footer" />
+</BaseLayout>

@@ -1,0 +1,183 @@
+---
+import { getCollection, render } from 'astro:content';
+import { allSiteSlugs, allProductSlugs, mainNavigation } from '../data/navigation';
+import { createFallbackPage } from '../data/content';
+import BlogPostLayout from '../layouts/BlogPostLayout.astro';
+import ArticleLayout from '../layouts/ArticleLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BlogCard from '../components/BlogCard.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  const pageEntries = await getCollection('pages');
+
+  const blogPaths = blogEntries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { type: 'blog' as const, entry },
+  }));
+
+  const pagePaths = pageEntries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { type: 'page' as const, entry },
+  }));
+
+  const covered = new Set([
+    ...blogEntries.map((e) => e.id),
+    ...pageEntries.map((e) => e.id),
+    'contact',
+    'blog',
+    'home',
+  ]);
+
+  const legacyPaths = [...new Set([...allSiteSlugs, ...allProductSlugs])]
+    .filter((slug) => !covered.has(slug))
+    .map((slug) => ({
+      params: { slug },
+      props: { type: 'legacy' as const, slug },
+    }));
+
+  return [...blogPaths, ...pagePaths, ...legacyPaths];
+}
+
+const props = Astro.props;
+
+function getCategoryItems(pageSlug: string) {
+  const navItem = mainNavigation.find((item) => item.href === `/${pageSlug}/`);
+  if (!navItem?.children) return [];
+  const images = [
+    '/images/2023/05/wanddecoratie.jpg',
+    '/images/2023/05/kussen-1024x1016.jpg',
+    '/images/2023/05/meubels.jpg',
+    '/images/2023/05/klokken.jpg',
+  ];
+  return navItem.children.map((child, i) => ({
+    title: child.label,
+    href: child.href,
+    image: images[i % images.length],
+    alt: child.label,
+  }));
+}
+
+const legacyPage = props.type === 'legacy' ? createFallbackPage(props.slug) : null;
+const categoryItems = props.type === 'page' ? getCategoryItems(props.entry.id) : [];
+const isCategoryHub =
+  props.type === 'page' &&
+  ['decoratie', 'slaapruimte', 'woonkamer', 'verlichting', 'wasruimte', 'tuin'].includes(
+    props.entry.id
+  );
+
+const { Content } =
+  props.type === 'blog' || props.type === 'page'
+    ? await render(props.entry)
+    : { Content: null };
+
+const allPages = await getCollection('pages');
+---
+{props.type === 'blog' && Content && (
+  <BlogPostLayout entry={props.entry}>
+    <Header slot="header" />
+    <Content />
+    <Footer slot="footer" />
+  </BlogPostLayout>
+)}
+
+{props.type === 'page' && Content && (
+  <PageLayout entry={props.entry}>
+    <Header slot="header" />
+    <div class="container">
+      <div class="prose reveal">
+        <Content />
+      </div>
+      {isCategoryHub && categoryItems.length > 0 && (
+        <div class="category-grid">
+          <div class="card-grid card-grid--3">
+            {categoryItems.map((item) => (
+              <BlogCard
+                title={item.title}
+                href={item.href}
+                image={item.image}
+                excerpt={`Bekijk onze selectie ${item.title.toLowerCase()}.`}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+      {props.entry.id === 'sitemap' && (
+        <nav class="sitemap reveal" aria-label="Sitemap">
+          <h2>Pagina's</h2>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            {allPages.map((p) => (
+              <li><a href={`/${p.id}/`}>{p.data.title}</a></li>
+            ))}
+          </ul>
+          <h2>Producten</h2>
+          <ul class="sitemap__products">
+            {allProductSlugs.map((s) => (
+              <li><a href={`/${s}/`}>{s.replace(/^beste-/, '').replace(/-/g, ' ')}</a></li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </div>
+    <Footer slot="footer" />
+  </PageLayout>
+)}
+
+{props.type === 'legacy' && legacyPage && (
+  <ArticleLayout title={legacyPage.title} description={legacyPage.description} image={legacyPage.featuredImage}>
+    <Header slot="header" />
+    <div set:html={legacyPage.content} />
+    <Footer slot="footer" />
+  </ArticleLayout>
+)}
+
+<style>
+  .category-grid {
+    padding-block: clamp(2rem, 4vw, 3rem);
+  }
+
+  .sitemap {
+    padding-block: 2rem;
+  }
+
+  .sitemap h2 {
+    font-size: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .sitemap ul {
+    list-style: none;
+    padding: 0;
+    columns: 2;
+    gap: 2rem;
+  }
+
+  .sitemap li {
+    margin-bottom: 0.5rem;
+  }
+
+  .sitemap a {
+    color: var(--color-muted);
+    transition: color var(--transition);
+  }
+
+  .sitemap a:hover {
+    color: var(--color-accent);
+  }
+
+  .sitemap__products {
+    columns: 3;
+  }
+
+  @media (max-width: 767px) {
+    .sitemap ul,
+    .sitemap__products {
+      columns: 1;
+    }
+  }
+</style>

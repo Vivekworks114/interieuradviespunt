@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BlogCard from './BlogCard.astro';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 8);
+---
+<section class="services section">
+  <div class="container">
+    <div class="section-header section-header--center reveal">
+      <h2>Artikelen en blogs voor je interieur</h2>
+      <p>
+        Op Interieuradviespunt.nl hebben we ook een hele hoop artikelen en blogs staan. Elk artikel en blog is natuurlijk onderzocht, zodat jij zeker weet dat je alleen de beste informatie op onze website tegenkomt.
+      </p>
+    </div>
+
+    <div class="card-grid card-grid--3">
+      {posts.map((post, index) => (
+        <div class="reveal" style={`transition-delay: ${index * 0.05}s`}>
+          <BlogCard
+            title={post.data.title}
+            href={`/${post.id}/`}
+            image={post.data.featuredImage ?? '/images/2023/05/wanddecoratie.jpg'}
+            date={post.data.pubDate.toISOString().slice(0, 10)}
+            excerpt={post.data.description}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--color-bg);
+  }
+</style>
