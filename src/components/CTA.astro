@@ -1,0 +1,69 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href?: string;
+  buttonLabel?: string;
+  variant?: 'default' | 'accent';
+}
+
+const {
+  title,
+  description,
+  href = '/blog/',
+  buttonLabel = 'Lees Meer',
+  variant = 'default',
+} = Astro.props;
+---
+<section class:list={['cta section', { 'cta--accent': variant === 'accent' }]}>
+  <div class="container cta__inner reveal">
+    <div class="cta__content">
+      <h2>{title}</h2>
+      <p>{description}</p>
+      <a href={href} class="btn">
+        {buttonLabel}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    background-color: var(--color-bg);
+    background-image: url('/images/2022/08/Group-10.jpg');
+    background-size: cover;
+    background-position: center;
+    padding-block: clamp(4.5rem, 10vw, 7.75rem);
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(38, 38, 38, 0.94) 0%, rgba(38, 38, 38, 0.7) 100%);
+  }
+
+  .cta__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta__content {
+    max-width: 36rem;
+  }
+
+  .cta__content h2 {
+    margin-bottom: 1rem;
+  }
+
+  .cta__content p {
+    color: var(--color-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .cta--accent .cta__content h2 {
+    color: var(--color-accent);
+  }
+</style>

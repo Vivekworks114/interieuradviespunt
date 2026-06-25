@@ -1,0 +1,163 @@
+---
+import { heroQuickLinks } from '../data/categories';
+---
+<section class="hero">
+  <div class="hero__main">
+    <div class="container hero__layout">
+      <div class="hero__content reveal">
+        <h1>Interieuradviespunt.nl helpt jou met je interieur</h1>
+        <p>
+          Interieuradviespunt.nl helpt jou met je interieur. Het maakt dan niet uit of je een groot interieur hebt of juist een erg klein interieur. Het gaat erom dat we je helpen om het beste in je woning naar boven te halen.
+        </p>
+        <p>
+          Soms is het best wel lastig om een interieur juist aan te pakken. Daarom helpen we je hier graag mee. Op onze website vind je alle producten, tips en opties die je kunt vinden voor je interieur.
+        </p>
+        <a href="/blog/" class="btn">
+          Lees Meer
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__quicklinks">
+    <div class="container">
+      <div class="hero__quicklinks-grid">
+        {heroQuickLinks.map((link) => (
+          <a href={link.href} class="hero__quicklink">
+            <span>{link.label}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero__main {
+    position: relative;
+    background-color: var(--color-bg);
+    background-image: url('/images/2022/08/Group-82.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: clamp(4.5rem, 10vw, 7.75rem) 0 clamp(8rem, 14vw, 14.25rem);
+  }
+
+  .hero__main::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(38, 38, 38, 0.92) 0%, rgba(38, 38, 38, 0.55) 55%, rgba(38, 38, 38, 0.25) 100%);
+  }
+
+  .hero__layout {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero__content {
+    max-width: 36rem;
+  }
+
+  .hero__content h1 {
+    margin-bottom: 1.25rem;
+  }
+
+  .hero__content p {
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+  }
+
+  .hero__content .btn {
+    margin-top: 0.5rem;
+  }
+
+  .hero__quicklinks {
+    margin-top: -4.5rem;
+    position: relative;
+    z-index: 2;
+    padding-bottom: 0.5rem;
+  }
+
+  .hero__quicklinks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hero__quicklink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 1.375rem 1.125rem;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-primary);
+    border-right: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    transition: background var(--transition), color var(--transition);
+  }
+
+  .hero__quicklink:hover {
+    background: rgba(177, 141, 77, 0.12);
+    color: var(--color-accent);
+  }
+
+  .hero__quicklink svg {
+    flex-shrink: 0;
+    transition: transform var(--transition);
+  }
+
+  .hero__quicklink:hover svg {
+    transform: translateX(4px);
+  }
+
+  @media (min-width: 768px) {
+    .hero__quicklinks-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .hero__quicklink:nth-child(3n) {
+      border-right: none;
+    }
+
+    .hero__quicklink:nth-last-child(-n + 3) {
+      border-bottom: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero__quicklinks-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .hero__quicklink {
+      border-right: 1px solid var(--color-border);
+      border-bottom: none;
+      flex-direction: column;
+      text-align: center;
+      font-size: 0.875rem;
+    }
+
+    .hero__quicklink:last-child {
+      border-right: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero__quicklink:nth-child(2n) {
+      border-right: none;
+    }
+
+    .hero__quicklink:nth-last-child(-n + 2) {
+      border-bottom: none;
+    }
+  }
+</style>

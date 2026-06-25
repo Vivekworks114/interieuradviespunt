@@ -1,0 +1,93 @@
+---
+---
+<section class="contact section">
+  <div class="container">
+    <div class="contact__grid reveal">
+      <div class="contact__info">
+        <h2>Contact</h2>
+        <p>
+          Heb je een vraag over interieur, producten of onze tips? Neem gerust contact met ons op. We helpen je graag verder met advies voor je interieur.
+        </p>
+      </div>
+      <form class="contact__form" action="/contact/" method="post">
+        <div class="form-group">
+          <label for="name">Naam</label>
+          <input type="text" id="name" name="name" required autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for="email">E-mailadres</label>
+          <input type="email" id="email" name="email" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="message">Bericht</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn--accent">Versturen</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact__grid {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3rem);
+    align-items: start;
+  }
+
+  .contact__info p {
+    color: var(--color-muted);
+    max-width: 28rem;
+  }
+
+  .contact__form {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+  }
+
+  .form-group {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--color-primary);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-primary);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(177, 141, 77, 0.2);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  @media (min-width: 768px) {
+    .contact__grid {
+      grid-template-columns: 1fr 1.2fr;
+    }
+  }
+</style>

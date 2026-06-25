@@ -1,0 +1,121 @@
+---
+import { homepageCategories } from '../data/categories';
+---
+<section class="features section">
+  <div class="container">
+    <div class="section-header section-header--center reveal">
+      <h2>De nieuwste reviews over onze producten</h2>
+      <p>
+        Voor ons is het belangrijk dat we ervaringen van andere mensen op onze website delen. Zo weten nieuwkomers precies waar ze aan toe zijn. Hieronder kun je enkele reviews lezen.
+      </p>
+    </div>
+
+    <div class="features__grid">
+      {homepageCategories.map((category, index) => (
+        <article class="feature-card reveal" style={`transition-delay: ${index * 0.05}s`}>
+          <div class="feature-card__image-wrap">
+            <img
+              src={category.image}
+              alt={category.alt}
+              class="feature-card__image"
+              width="500"
+              height="500"
+              loading="lazy"
+            />
+            <h3 class="feature-card__title">{category.title}</h3>
+          </div>
+          <ul class="feature-card__links">
+            {category.links.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .feature-card {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .feature-card__image-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card__image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .feature-card:hover .feature-card__image {
+    transform: scale(1.04);
+  }
+
+  .feature-card__title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(transparent, rgba(38, 38, 38, 0.92));
+    font-size: 1.25rem;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .feature-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem 0.75rem;
+    padding: 1rem 1.25rem 1.25rem;
+  }
+
+  .feature-card__links a {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    transition: color var(--transition);
+  }
+
+  .feature-card__links a:hover {
+    color: var(--color-accent);
+  }
+
+  .feature-card__links li:not(:last-child)::after {
+    content: '·';
+    margin-left: 0.75rem;
+    color: var(--color-border);
+  }
+
+  @media (min-width: 600px) {
+    .features__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .features__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
