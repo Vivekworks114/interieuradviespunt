@@ -1,0 +1,27 @@
+[
+  {
+    "slug": "blog",
+    "name": "Blog",
+    "parent": ""
+  },
+  {
+    "slug": "interieur",
+    "name": "interieur",
+    "parent": ""
+  },
+  {
+    "slug": "social-media",
+    "name": "Social media",
+    "parent": ""
+  },
+  {
+    "slug": "tiktok",
+    "name": "TikTok",
+    "parent": ""
+  },
+  {
+    "slug": "",
+    "name": "",
+    "parent": ""
+  }
+]

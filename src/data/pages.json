@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "sample-page",
+    "title": "Sample Page",
+    "excerpt": "This is an example page. It's different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this: Hi there! I'm a bike messenger",
+    "featuredImage": "/images/2023/05/wanddecoratie.jpg"
+  },
+  {
+    "slug": "sitemap",
+    "title": "Sitemap",
+    "excerpt": "",
+    "featuredImage": "/images/2023/05/wanddecoratie.jpg"
+  },
+  {
+    "slug": "tuin",
+    "title": "Tuin",
+    "excerpt": "Hier hebben we allerlei producten neergezet om de tuin te verfraaien en te onderhouden. Door te klikken op een item kun jezelf een vergelijking maken welke je wilt.",
+    "featuredImage": "/images/2023/05/wanddecoratie.jpg"
+  },
+  {
+    "slug": "slaapruimte",
+    "title": "Slaapruimte",
+    "excerpt": "In de slaapruimte vind je producten die je nodig hebt in de slaapkamer zoals hoofdkussen, boxspring, een stapelbed en nog veel meer. Hier kun je ze allemaal bekijken.",
+    "featuredImage": "/images/2023/05/wanddecoratie.jpg"
+  },
+  {
+    "slug": "decoratie",
+    "title": "Decoratie",
+    "excerpt": "Voor al je prachtige decoraties moet je hier terecht. We hebben verschillende soorten wanddecoraties en nog veel meer op een rijtje gezet. Bekijk ze maar hier.",
+    "featuredImage": "/images/2023/05/wanddecoratie.jpg"
+  },
+  {
+    "slug": "verlichting",
+    "title": "Verlichting",
+    "excerpt": "Verlicht je woning en terras met onze geweldige lantaarn, olielamp of een dergelijk product. Deze vind je hier in de categorie verlichting.",
+    "featuredImage": "/images/2023/05/wanddecoratie.jpg"
+  },
+  {
+    "slug": "woonkamer",
+    "title": "Woonkamer",
+    "excerpt": "Deze categorie bevat alles dat je nodig hebt als je een woonhuis of een ruimte wilt inrichten. Neem een kijkje in de lijst hieronder.",
+    "featuredImage": "/images/2023/05/wanddecoratie.jpg"
+  },
+  {
+    "slug": "wasruimte",
+    "title": "Wasruimte",
+    "excerpt": "In de wasruimte kom je de meest belangrijke items tegen voor het schoonmaken van je woning en het onderhouden van je lichaam. Bekijk ze maar hieronder in de lijst.",
+    "featuredImage": "/images/2023/05/wanddecoratie.jpg"
+  },
+  {
+    "slug": "architectenbureaus",
+    "title": "Architectenbureaus",
+    "excerpt": "Op zoek naar een ervaren architectenbureau voor jouw project? Ontdek onze selectie van toonaangevende architectenbureaus die bekend staan om hun innovatieve ontwerpen en vakmanschap. Van moderne woningen tot historische restauraties, deze bureaus bieden een scala aan expertise en creativiteit om aan",
+    "featuredImage": "/images/2023/05/wanddecoratie.jpg"
+  }
+]
