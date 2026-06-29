@@ -31,6 +31,8 @@ const pages = defineCollection({
     updatedDate: z.coerce.date().optional(),
     featuredImage: z.string().optional(),
     pageType: z.enum(['product']).optional(),
+    updatedLabel: z.string().optional(),
+    publishedLabel: z.string().optional(),
   }),
 });
 

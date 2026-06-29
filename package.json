@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "migrate": "python3 scripts/migrate-wordpress.py"
+    "migrate": "python3 scripts/migrate-wordpress.py",
+    "fetch-products": "PYTHONUNBUFFERED=1 python3 scripts/fetch-product-pages.py"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.0",

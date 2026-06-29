@@ -1,10 +1,13 @@
 ---
 import { getCollection, render } from 'astro:content';
+import fs from 'node:fs';
+import path from 'node:path';
 import { allSiteSlugs, allProductSlugs, mainNavigation } from '../data/navigation';
 import { createFallbackPage } from '../data/content';
 import BlogPostLayout from '../layouts/BlogPostLayout.astro';
-import ArticleLayout from '../layouts/ArticleLayout.astro';
 import PageLayout from '../layouts/PageLayout.astro';
+import ProductPageLayout from '../layouts/ProductPageLayout.astro';
+import ArticleLayout from '../layouts/ArticleLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BlogCard from '../components/BlogCard.astro';
@@ -74,6 +77,15 @@ const { Content } =
     : { Content: null };
 
 const allPages = await getCollection('pages');
+
+const productHtmlPath =
+  props.type === 'page' && props.entry.data.pageType === 'product'
+    ? path.join(process.cwd(), 'src/content/product-html', `${props.entry.id}.html`)
+    : null;
+const productHtml =
+  productHtmlPath && fs.existsSync(productHtmlPath)
+    ? fs.readFileSync(productHtmlPath, 'utf-8')
+    : null;
 ---
 {props.type === 'blog' && Content && (
   <BlogPostLayout entry={props.entry}>
@@ -83,7 +95,15 @@ const allPages = await getCollection('pages');
   </BlogPostLayout>
 )}
 
-{props.type === 'page' && Content && (
+{props.type === 'page' && props.entry.data.pageType === 'product' && productHtml && (
+  <ProductPageLayout entry={props.entry}>
+    <Header slot="header" />
+    <div class="product-page-content reveal" set:html={productHtml} />
+    <Footer slot="footer" />
+  </ProductPageLayout>
+)}
+
+{props.type === 'page' && Content && props.entry.data.pageType !== 'product' && (
   <PageLayout entry={props.entry}>
     <Header slot="header" />
     <div class="container">
@@ -172,6 +192,11 @@ const allPages = await getCollection('pages');
 
   .sitemap__products {
     columns: 3;
+  }
+
+  .product-page-content {
+    max-width: none;
+    padding: 0;
   }
 
   @media (max-width: 767px) {

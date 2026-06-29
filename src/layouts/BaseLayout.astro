@@ -50,12 +50,12 @@ const fullTitle =
         document.body.classList.toggle('nav-open');
       });
 
-      document.querySelectorAll('.nav-item--has-children > .nav-link').forEach((link) => {
-        link.addEventListener('click', (e) => {
-          if (window.innerWidth <= 1024) {
-            e.preventDefault();
-            link.parentElement?.classList.toggle('nav-item--expanded');
-          }
+      document.querySelectorAll('.nav-submenu-toggle').forEach((button) => {
+        button.addEventListener('click', () => {
+          const item = button.closest('.nav-item');
+          const expanded = button.getAttribute('aria-expanded') === 'true';
+          button.setAttribute('aria-expanded', String(!expanded));
+          item?.classList.toggle('nav-item--expanded');
         });
       });
 

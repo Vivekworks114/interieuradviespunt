@@ -10,7 +10,9 @@ const recentPosts = (await getCollection('blog'))
 <footer class="footer">
   <div class="container footer__share reveal">
     <h2 class="footer__share-title">Zie ook</h2>
-    <p class="footer__share-text">YouTube likes nu beschikbaar</p>
+    <p class="footer__share-text">
+      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube likes nu beschikbaar</a>
+    </p>
   </div>
 
   <div class="container footer__inner">
@@ -36,7 +38,7 @@ const recentPosts = (await getCollection('blog'))
           </a>
         ))}
       </div>
-      <p class="footer__copyright">&copy; 2026 All rights reserved</p>
+      <p class="footer__copyright">&copy; 2024 All rights reserved</p>
     </div>
 
     <div class="footer__column">
@@ -87,10 +89,19 @@ const recentPosts = (await getCollection('blog'))
     margin: 0;
   }
 
+  .footer__share-text a {
+    color: var(--color-muted);
+    transition: color var(--transition);
+  }
+
+  .footer__share-text a:hover {
+    color: var(--color-accent);
+  }
+
   .footer__inner {
     display: grid;
     grid-template-columns: 1fr;
-    gap: clamp(2rem, 4vw, 3rem);
+    gap: clamp(2rem, 4vw, 2.5rem);
   }
 
   .footer__logo img {
@@ -168,23 +179,23 @@ const recentPosts = (await getCollection('blog'))
     color: var(--color-accent);
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 640px) {
     .footer__inner {
       grid-template-columns: repeat(2, 1fr);
     }
+  }
 
-    .footer__brand {
-      grid-column: 1 / -1;
+  @media (min-width: 900px) {
+    .footer__inner {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1200px) {
     .footer__inner {
-      grid-template-columns: 32% 16% 15% 14% 21%;
-    }
-
-    .footer__brand {
-      grid-column: auto;
+      grid-template-columns: minmax(200px, 1.55fr) minmax(140px, 1.1fr) repeat(4, minmax(100px, 1fr));
+      gap: clamp(1.5rem, 2.5vw, 2rem);
+      align-items: start;
     }
   }
 </style>

@@ -17,13 +17,32 @@ function isActive(href: string) {
   <ul class="nav__list">
     {items.map((item) => (
       <li class:list={['nav-item', { 'nav-item--has-children': item.children?.length }]}>
-        <a
-          href={item.href}
-          class:list={['nav-link', { 'nav-link--active': isActive(item.href) }]}
-          aria-current={isActive(item.href) ? 'page' : undefined}
-        >
-          {item.label}
-        </a>
+        <div class="nav-item__row">
+          <a
+            href={item.href}
+            class:list={['nav-link', { 'nav-link--active': isActive(item.href) }]}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            <span class="nav-link__label">{item.label}</span>
+            {item.children && (
+              <svg class="nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            )}
+          </a>
+          {item.children && (
+            <button
+              type="button"
+              class="nav-submenu-toggle"
+              aria-label={`${item.label} submenu`}
+              aria-expanded="false"
+            >
+              <svg class="nav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+          )}
+        </div>
         {item.children && (
           <ul class="nav__submenu">
             {item.children.map((child) => (
@@ -49,10 +68,19 @@ function isActive(href: string) {
 
   .nav-item {
     position: relative;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-item__row {
+    display: flex;
+    align-items: stretch;
   }
 
   .nav-link {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex: 1;
     padding: 0.875rem 1rem;
     font-family: var(--font-heading);
     font-size: 1rem;
@@ -66,9 +94,44 @@ function isActive(href: string) {
     color: var(--color-accent);
   }
 
+  .nav-link :global(.nav-chevron),
+  .nav-link .nav-chevron {
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: transform var(--transition);
+  }
+
+  .nav-submenu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    border-left: 1px solid var(--color-border);
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: color var(--transition), background var(--transition);
+  }
+
+  .nav-submenu-toggle:hover {
+    color: var(--color-accent);
+    background: var(--color-bg-elevated);
+  }
+
+  .nav-submenu-toggle .nav-chevron {
+    transition: transform var(--transition);
+  }
+
+  .nav-item--expanded .nav-submenu-toggle .nav-chevron,
+  .nav-item--expanded .nav-link .nav-chevron {
+    transform: rotate(180deg);
+  }
+
   .nav__submenu {
     display: none;
-    padding-left: 1rem;
+    padding: 0.25rem 0 0.75rem;
     background: var(--color-bg-elevated);
   }
 
@@ -78,7 +141,7 @@ function isActive(href: string) {
 
   .nav-sublink {
     display: block;
-    padding: 0.625rem 1rem;
+    padding: 0.625rem 1.25rem;
     font-size: 0.9375rem;
     color: var(--color-muted);
     transition: color var(--transition);
@@ -90,15 +153,40 @@ function isActive(href: string) {
   }
 
   @media (min-width: 1024px) {
+    .nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
     .nav__list {
+      pointer-events: auto;
       flex-direction: row;
       align-items: center;
       gap: 0.25rem;
     }
 
+    .nav-item {
+      border-bottom: none;
+    }
+
+    .nav-item__row {
+      display: block;
+    }
+
     .nav-link {
       padding: 0.5rem 1rem;
       font-size: 0.9375rem;
+    }
+
+    .nav-submenu-toggle {
+      display: none;
     }
 
     .nav__submenu {
@@ -107,6 +195,7 @@ function isActive(href: string) {
       left: 0;
       min-width: 220px;
       padding: 0.5rem 0;
+      background: var(--color-bg-elevated);
       border: 1px solid var(--color-border);
       box-shadow: var(--shadow-md);
       z-index: 100;
@@ -117,10 +206,12 @@ function isActive(href: string) {
       display: block;
     }
 
+    .nav-item--has-children:hover .nav-link .nav-chevron {
+      transform: rotate(180deg);
+    }
+
     .nav--open {
-      position: static;
-      background: transparent;
-      padding: 0;
+      transform: none;
     }
   }
 
@@ -128,17 +219,22 @@ function isActive(href: string) {
     .nav {
       position: fixed;
       inset: 0;
-      top: 60px;
+      top: 57px;
       z-index: 999;
       background: var(--color-bg);
-      padding: 1rem;
+      padding: 0;
       transform: translateX(100%);
       transition: transform var(--transition);
       overflow-y: auto;
+      border-top: 1px solid var(--color-border);
     }
 
     .nav--open {
       transform: translateX(0);
+    }
+
+    .nav-link .nav-chevron {
+      display: none;
     }
   }
 </style>
