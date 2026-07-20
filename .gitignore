@@ -28,3 +28,6 @@ Thumbs.db
 
 # misc
 *.local
+tmp-exact-cache/
+tmp-exact-build.log
+tmp-lightbox-analysis/
